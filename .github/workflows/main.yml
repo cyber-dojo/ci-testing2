@@ -15,6 +15,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: cyber-dojo/ci-testing
+          token: ${{ secrets.ACTIONS_GITHUB_TOKEN }}
           fetch-depth: 0
 
       - name: Create branch
@@ -23,17 +24,16 @@ jobs:
 
       - name: Edit Dockerfile
         run: |
+          pwd
+          cd ci-testing
           cp Dockerfile Dockerfile.original
           echo "FROM ${NEW_BASE_IMAGE}" > Dockerfile
           cat Dockerfile.original | tail -n+2 >> Dockerfile
 
-      - name: Commit
+      - name: Commit and push
         run: |
-          git config --global user.email "you@example.com"
-          git config --global user.name "Your Name"
+          git config --global user.email "${GITHUB_USER}"
+          git config --global user.name "${GITHUB_EMAIL}"
           git add .
           git commit -m "Dockerfile - Automated base-image update"
-
-      - name: Push branch
-        run:
-          git push --set-upstream origin update-base-image
+          git push -u origin update-base-image
