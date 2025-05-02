@@ -12,6 +12,8 @@ In Drop-down, select repos you want to push to
 For Permissions, click Repository-permissions
 Scroll down to "Contents"
 In drop-down change 'No access' to 'Read and write'
+Scroll down to "Pull-requests"
+In drop-down change 'No access' to 'Read and write'
 Click [Generate token]
 Copy the token in buffer
 Add the token as Org-level secret called BASE_IMAGE_UPGRADE
