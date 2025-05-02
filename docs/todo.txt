@@ -2,5 +2,12 @@
 Update github settings for ci-testing so that when a branch's workflow completes
 it is automatically merged to main.
 
+In the repos Settings
+Scroll down to Pull-Requests
+Allow auto-merge. Tick it
+Automatically delete head branches. Tick it.
+
+Still need to automatically create a pull-request, from the calling repo's workflow.
+
 Verify this merge triggers a new workflow, which sees the updated base-image
 and, if the workflow completes, deploys to aws-beta
