@@ -27,7 +27,7 @@ jobs:
 
       - name: Commit
         run:
-          git commit -m "Dockerfile: Automated base-image update"
+          git commit -m "Dockerfile - Automated base-image update"
 
       - name: Push branch
         run:
