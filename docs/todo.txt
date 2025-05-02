@@ -1,0 +1,6 @@
+
+Update github settings for ci-testing so that when a branch's workflow completes
+it is automatically merged to main.
+
+Verify this merge triggers a new workflow, which sees the updated base-image
+and, if the workflow completes, deploys to aws-beta
