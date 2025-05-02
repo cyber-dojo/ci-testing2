@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: cyberdojo/ci-testing
+          repository: cyber-dojo/ci-testing
           fetch-depth: 0
 
       - name: Create branch, edit Dockerfile, commit, push branch
