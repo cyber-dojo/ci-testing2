@@ -36,4 +36,4 @@ jobs:
 
       - name: Push branch
         run:
-          git push
+          git push --set-upstream origin update-base-image
