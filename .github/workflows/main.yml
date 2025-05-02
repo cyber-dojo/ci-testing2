@@ -28,7 +28,10 @@ jobs:
           cat Dockerfile.original | tail -n+2 >> Dockerfile
 
       - name: Commit
-        run:
+        run: |
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
+          git add .
           git commit -m "Dockerfile - Automated base-image update"
 
       - name: Push branch
