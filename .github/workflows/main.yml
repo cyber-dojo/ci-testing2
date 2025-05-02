@@ -1,0 +1,19 @@
+
+name: Main
+
+on:
+  push:
+
+jobs:
+  push-to-other-repo:
+    runs-on: ubuntu-latest
+    needs: []
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: cyberdojo/ci-testing
+          fetch-depth: 0
+
+      - name: Create branch, edit Dockerfile, commit, push branch
+        run: |          
+          echo todo
