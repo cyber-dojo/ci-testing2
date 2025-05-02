@@ -22,11 +22,12 @@ jobs:
         run:
           git checkout -b update-base-image
 
-      - name: Edit Dockerfile
+      - name: Edit 1st line of Dockerfile
         run: |
           cp Dockerfile Dockerfile.original
           echo "FROM ${NEW_BASE_IMAGE}" > Dockerfile
           cat Dockerfile.original | tail -n+2 >> Dockerfile
+          rm Dockerfile.original
 
       - name: Commit and push
         run: |
