@@ -4,6 +4,9 @@ name: Main
 on:
   push:
 
+env:
+  NEW_BASE_IMAGE: cyberdojo/sinatra-base:759c4e9@sha256:d5f87f343a9f88a598b810c0f02b81db0bb67319701a956aec3577cbd51c1c24
+
 jobs:
   push-to-other-repo:
     runs-on: ubuntu-latest
@@ -14,6 +17,18 @@ jobs:
           repository: cyber-dojo/ci-testing
           fetch-depth: 0
 
-      - name: Create branch, edit Dockerfile, commit, push branch
-        run: |          
-          echo todo
+      - name: Create branch
+        run:
+          git checkout -b update-base-image
+
+      - name: Edit Dockerfile
+        run:
+          sed -i "1s/.*/$NEW_BASE_IMAGE/" Dockerfile
+
+      - name: Commit
+        run:
+          git commit -m "Dockerfile: Automated base-image update"
+
+      - name: Push branch
+        run:
+          git push
