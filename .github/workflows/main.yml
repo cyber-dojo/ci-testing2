@@ -24,8 +24,6 @@ jobs:
 
       - name: Edit Dockerfile
         run: |
-          pwd
-          cd ci-testing
           cp Dockerfile Dockerfile.original
           echo "FROM ${NEW_BASE_IMAGE}" > Dockerfile
           cat Dockerfile.original | tail -n+2 >> Dockerfile
