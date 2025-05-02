@@ -36,9 +36,12 @@ jobs:
           git add .
           git commit -m "Dockerfile - Automated base-image update"
           git push -u origin update-base-image
+          git checkout main
+          git merge update-base-image
+          git push -u origin main
 
-      - name: Create pull request
-        env:
-            GH_TOKEN: ${{ secrets.BASE_IMAGE_UPGRADE }}
-        run:
-          gh pr create -B main -H update-base-image --title 'Merge update-base-image into main' --body 'Created by Github action'
+#      - name: Create pull request
+#        env:
+#            GH_TOKEN: ${{ secrets.BASE_IMAGE_UPGRADE }}
+#        run:
+#          gh pr create -B main -H update-base-image --title 'Merge update-base-image into main' --body 'Created by Github action'
