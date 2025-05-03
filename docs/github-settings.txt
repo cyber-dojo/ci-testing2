@@ -13,9 +13,4 @@ Scroll down
 "Allow GitHub Actions to create and approve pull requests" Tick it
 Save
 
-Currently, ci-testing2 is doing a commit, push, PR
-ci-testing workflow is running
-
->>>>> But branch is not being automatically merged into main.
-
 
