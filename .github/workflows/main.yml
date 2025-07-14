@@ -9,12 +9,6 @@ jobs:
     needs: []
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          repository: cyber-dojo/${{ matrix.repo-name }}
-          token: ${{ secrets.BASE_IMAGE_UPGRADE }}
-          fetch-depth: 0
-
       - name: Create output
         run:
           echo Hello > hello.txt
