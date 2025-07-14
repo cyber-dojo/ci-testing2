@@ -4,41 +4,21 @@ name: Main
 on:
   push:
 
-env:
-  NEW_BASE_IMAGE: cyberdojo/sinatra-base:759c4e9@sha256:d5f87f343a9f88a598b810c0f02b81db0bb67319701a956aec3577cbd51c1c24
-
 jobs:
-  push-to-other-repo:
-    runs-on: ubuntu-latest
+  anything:
     needs: []
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: cyber-dojo/ci-testing
+          repository: cyber-dojo/${{ matrix.repo-name }}
           token: ${{ secrets.BASE_IMAGE_UPGRADE }}
           fetch-depth: 0
 
-      - name: Create branch
+      - name: Create output
         run:
-          git checkout -b update-base-image
+          echo Hello > hello.txt
 
-      - name: Edit 1st line of Dockerfile
-        run: |
-          cp Dockerfile Dockerfile.original
-          echo "FROM ${NEW_BASE_IMAGE}" > Dockerfile
-          cat Dockerfile.original | tail -n+2 >> Dockerfile
-          rm Dockerfile.original
-
-      - name: Commit
-        run: |
-          git config --global user.email "{{ github.actor }}"
-          git config --global user.name "${{ github.event.sender.login }}@users.noreply.github.com"
-          git add .
-          git commit -m "Dockerfile - Automated base-image update"
-          git push -u origin update-base-image
-
-      - name: Create pull request
-        env:
-            GH_TOKEN: ${{ secrets.BASE_IMAGE_UPGRADE }}
+      - name: See if it still exists in next step
         run:
-          gh pr create -B main -H update-base-image --title 'Merge update-base-image into main' --body 'Created by Github action'
+          ls -al
