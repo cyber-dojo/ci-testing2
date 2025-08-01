@@ -37,10 +37,12 @@ jobs:
         env:
           GH_TOKEN: ${{github.token}}
         run: |
-          echo "job_url=$(gh run --repo ${{github.repository}} view ${{github.run_id}} \
+          # echo "job_url=$(
+          gh run --repo ${{github.repository}} view ${{github.run_id}} \
             --json jobs \
             --jq '.jobs[]
-              | select(.name == "${{github.job}}")' 
+              | select(.name == "${{github.job}}")
+            ' 
 
 
       - name: Send secrets needing attention message to Slack
