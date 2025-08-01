@@ -12,7 +12,13 @@ jobs:
       - name: Create output
         run:
           echo Hello > hello.txt
+          sdfsdf
 
       - name: See if it still exists in next step
         run:
           ls -al
+
+      - name: third
+        if: ${{ failure() }}
+        run:
+          pwd
