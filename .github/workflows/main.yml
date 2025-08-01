@@ -4,21 +4,37 @@ name: Main
 on:
   push:
 
+env:
+  SLACK_MESSAGE_FILENAME: slack_message.txt
+
 jobs:
   anything:
     needs: []
     runs-on: ubuntu-latest
     steps:
-      - name: Create output
+      - name: Get the Slack message
+        id: slack_message
         run: |
-          echo Hello > hello.txt
-          sdfsdf
+          echo "Hello\nWorld\nGoodbye" > "${SLACK_MESSAGE_FILENAME}"
+          cat "${SLACK_MESSAGE_FILENAME}"
+          echo "content=$(cat "${SLACK_MESSAGE_FILENAME}")" >> ${GITHUB_OUTPUT}          
+          {
+            echo "SLACK_MESSAGE<<EOF"
+            cat "${SLACK_MESSAGE_FILENAME}"
+            echo "EOF"
+          } >> ${GITHUB_ENV}          
 
-      - name: See if it still exists in next step
-        run:
-          ls -al
+      - name: Send secrets needing attention message to Slack
+        if: ${{ steps.slack_message.content != '' }}
+        run: |
+          echo "some secrets need attention"
+
+      - name: Send no-secrets need attention message to Slack
+        if: ${{ steps.slack_message.content == '' }}
+        run: |
+          echo "no secrets need attention"
 
       - name: third
         if: failure()
         run:
-          pwd
+          echo "Send failure message to Slack"
