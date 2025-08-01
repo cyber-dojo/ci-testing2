@@ -16,11 +16,10 @@ jobs:
         id: slack_message
         run: |
           echo "" > "${SLACK_MESSAGE_FILENAME}"
-          echo "Hello" >> "${SLACK_MESSAGE_FILENAME}"
-          echo "World" >> "${SLACK_MESSAGE_FILENAME}"
+          #echo "Hello" >> "${SLACK_MESSAGE_FILENAME}"
+          #echo "World" >> "${SLACK_MESSAGE_FILENAME}"
           
           cat "${SLACK_MESSAGE_FILENAME}"
-          #echo "content=$(cat "${SLACK_MESSAGE_FILENAME}")" >> ${GITHUB_OUTPUT}          
           {
             echo "SLACK_MESSAGE<<EOF"
             cat "${SLACK_MESSAGE_FILENAME}"
