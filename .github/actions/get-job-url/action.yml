@@ -1,6 +1,11 @@
 name: Get job URL
 description: Get Github workflow current job URL
 
+inputs:
+  step_name:
+    description: Specific job step to include in the URL
+    required: true
+
 outputs:
   step_url:
     description: "URL to the calling job"
@@ -18,5 +23,10 @@ runs:
           --json jobs \
           --jq '.jobs[]
             | select(.name == "${{github.job}}")
-            | .url' \
+            | .url,
+            (
+              .steps[]
+              | select(.name == "${{inputs.step_name}}")
+              | "#step:\(.number):1"
+            )' \
           | tr -d "\n")" | tee "$GITHUB_OUTPUT"

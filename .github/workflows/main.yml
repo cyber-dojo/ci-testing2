@@ -30,8 +30,19 @@ jobs:
         run: |
           cat "${SLACK_MESSAGE_FILENAME}"
 
-      - uses: ./.github/actions/get-job-url
-        id: job_url
+#      - uses: ./.github/actions/get-job-url
+#        id: job_url
+
+      - name: Look into getting step URL
+      - id: get_job_url
+        env:
+          GH_TOKEN: ${{github.token}}
+        run: |
+          echo "job_url=$(gh run --repo ${{github.repository}} view ${{github.run_id}} \
+            --json jobs \
+            --jq '.jobs[]
+              | select(.name == "${{github.job}}")' 
+
 
       - name: Send secrets needing attention message to Slack
         if: ${{ env.SLACK_MESSAGE != '' }}
