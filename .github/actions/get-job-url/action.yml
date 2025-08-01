@@ -18,5 +18,5 @@ runs:
           --json jobs \
           --jq '.jobs[]
             | select(.name == "${{github.job}}")
-            | .url'
+            | .url' \
           | tr -d "\n")" | tee "$GITHUB_OUTPUT"
