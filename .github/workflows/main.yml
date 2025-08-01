@@ -23,13 +23,20 @@ jobs:
           } >> ${GITHUB_ENV}          
 
       - name: PRINT SECRETS NEEDING ATTENTION
+        id: print_secrets
         run: |
           cat "${SLACK_MESSAGE_FILENAME}"
+
+      - uses: ./.github/actions/get-step-url
+        id: step_url
+        with:
+          step_name: 'print_secrets'
 
       - name: Send secrets needing attention message to Slack
         if: ${{ env.SLACK_MESSAGE != '' }}
         run: |
           echo "Some secrets need attention"
+          echo "See ${{ steps.step_url.outputs.step_url }}"
           echo "See ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           echo ":${{ env.SLACK_MESSAGE }}:"
 
