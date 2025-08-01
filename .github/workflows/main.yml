@@ -13,33 +13,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get the Slack message
-        id: slack_message
         run: |
-          echo "" > "${SLACK_MESSAGE_FILENAME}"
-          #echo "Hello" >> "${SLACK_MESSAGE_FILENAME}"
-          #echo "World" >> "${SLACK_MESSAGE_FILENAME}"
-          sdfsdf
-          
-          cat "${SLACK_MESSAGE_FILENAME}"
+          echo "Hello" >> "${SLACK_MESSAGE_FILENAME}"
+          echo "World" >> "${SLACK_MESSAGE_FILENAME}"          
           {
             echo "SLACK_MESSAGE<<EOF"
             cat "${SLACK_MESSAGE_FILENAME}"
             echo "EOF"
           } >> ${GITHUB_ENV}          
 
+      - name: PRINT SECRETS NEEDING ATTENTION
+        run: |
+          cat "${SLACK_MESSAGE_FILENAME}"
+
       - name: Send secrets needing attention message to Slack
         if: ${{ env.SLACK_MESSAGE != '' }}
         run: |
-          echo "some secrets need attention"
+          echo "Some secrets need attention"
+          echo "See ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           echo ":${{ env.SLACK_MESSAGE }}:"
 
       - name: Send no-secrets need attention message to Slack
         if: ${{ env.SLACK_MESSAGE == '' }}
         run: |
-          echo "no secrets need attention"
-          echo ":${{ env.SLACK_MESSAGE }}:"
+          echo "No secrets need attention"
 
-      - name: third
+      - name: Send failure message to Slack
         if: failure()
         run:
-          echo "Send failure message to Slack"
+          echo "Secrets workflow failed"
+          echo "See ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
