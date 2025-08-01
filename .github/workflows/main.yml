@@ -39,8 +39,7 @@ jobs:
         if: ${{ env.SLACK_MESSAGE != '' }}
         run: |
           echo "Some secrets need attention"
-          echo "See ${{ steps.step_url.outputs.step_url }}"
-          echo "See ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          echo "See ${{ steps.step_url.outputs.step_url }}#step:4:1"
           echo ":${{ env.SLACK_MESSAGE }}:"
 
       - name: Send no-secrets need attention message to Slack
