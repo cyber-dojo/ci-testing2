@@ -15,12 +15,12 @@ jobs:
       - name: Get the Slack message
         id: slack_message
         run: |
-          echo "Hello" > "${SLACK_MESSAGE_FILENAME}"
+          echo "" > "${SLACK_MESSAGE_FILENAME}"
+          echo "Hello" >> "${SLACK_MESSAGE_FILENAME}"
           echo "World" >> "${SLACK_MESSAGE_FILENAME}"
           
-          # echo "" > "${SLACK_MESSAGE_FILENAME}"
           cat "${SLACK_MESSAGE_FILENAME}"
-          echo "content=$(cat "${SLACK_MESSAGE_FILENAME}")" >> ${GITHUB_OUTPUT}          
+          #echo "content=$(cat "${SLACK_MESSAGE_FILENAME}")" >> ${GITHUB_OUTPUT}          
           {
             echo "SLACK_MESSAGE<<EOF"
             cat "${SLACK_MESSAGE_FILENAME}"
@@ -28,16 +28,16 @@ jobs:
           } >> ${GITHUB_ENV}          
 
       - name: Send secrets needing attention message to Slack
-        if: ${{ steps.slack_message.outputs.content != '' }}
+        if: ${{ env.SLACK_MESSAGE != '' }}
         run: |
           echo "some secrets need attention"
-          echo ":${{ steps.slack_message.outputs.content }}:"
+          echo ":${{ env.SLACK_MESSAGE }}:"
 
       - name: Send no-secrets need attention message to Slack
-        if: ${{ steps.slack_message.outputs.content == '' }}
+        if: ${{ env.SLACK_MESSAGE == '' }}
         run: |
           echo "no secrets need attention"
-          echo ":${{ steps.slack_message.outputs.content }}:"
+          echo ":${{ env.SLACK_MESSAGE }}:"
 
       - name: third
         if: failure()
