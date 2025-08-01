@@ -18,6 +18,7 @@ jobs:
           echo "" > "${SLACK_MESSAGE_FILENAME}"
           #echo "Hello" >> "${SLACK_MESSAGE_FILENAME}"
           #echo "World" >> "${SLACK_MESSAGE_FILENAME}"
+          sdfsdf
           
           cat "${SLACK_MESSAGE_FILENAME}"
           {
