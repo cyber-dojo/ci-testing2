@@ -30,16 +30,14 @@ jobs:
         run: |
           cat "${SLACK_MESSAGE_FILENAME}"
 
-      - uses: ./.github/actions/get-step-url
-        id: step_url
-        with:
-          step_name: 'print_secrets'
+      - uses: ./.github/actions/get-job-url
+        id: job_url
 
       - name: Send secrets needing attention message to Slack
         if: ${{ env.SLACK_MESSAGE != '' }}
         run: |
           echo "Some secrets need attention"
-          echo "See ${{ steps.step_url.outputs.step_url }}#step:4:1"
+          echo "See ${{ steps.job_url.outputs.job_url }}#step:4:1"
           echo ":${{ env.SLACK_MESSAGE }}:"
 
       - name: Send no-secrets need attention message to Slack
