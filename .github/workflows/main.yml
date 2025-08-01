@@ -25,12 +25,12 @@ jobs:
           } >> ${GITHUB_ENV}          
 
       - name: Send secrets needing attention message to Slack
-        if: ${{ steps.slack_message.content != '' }}
+        if: ${{ steps.slack_message.outputs.content != '' }}
         run: |
           echo "some secrets need attention"
 
       - name: Send no-secrets need attention message to Slack
-        if: ${{ steps.slack_message.content == '' }}
+        if: ${{ steps.slack_message.outputs.content == '' }}
         run: |
           echo "no secrets need attention"
 
