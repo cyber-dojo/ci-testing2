@@ -34,17 +34,6 @@ jobs:
         with:
           step_name: 'print_secrets'
 
-#      - name: Look into getting step URL
-#        env:
-#          GH_TOKEN: ${{github.token}}
-#        run: |
-#          # echo "job_url=$(
-#          gh run --repo ${{github.repository}} view ${{github.run_id}} \
-#            --json jobs \
-#            --jq '.jobs[]
-#              | select(.name == "${{github.job}}")
-#            '
-
       - name: Send secrets needing attention message to Slack
         if: ${{ env.SLACK_MESSAGE != '' }}
         run: |
