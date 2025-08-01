@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Create output
-        run:
+        run: |
           echo Hello > hello.txt
           sdfsdf
 
