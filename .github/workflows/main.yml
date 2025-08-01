@@ -12,6 +12,9 @@ jobs:
     needs: []
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Get the Slack message
         run: |
           echo "Hello" >> "${SLACK_MESSAGE_FILENAME}"
