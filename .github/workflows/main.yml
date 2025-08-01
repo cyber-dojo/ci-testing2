@@ -25,31 +25,31 @@ jobs:
             echo "EOF"
           } >> ${GITHUB_ENV}          
 
-      - name: PRINT SECRETS NEEDING ATTENTION
-        id: print_secrets
+      - name: print_secrets
         run: |
           cat "${SLACK_MESSAGE_FILENAME}"
 
-#      - uses: ./.github/actions/get-job-url
-#        id: job_url
+      - uses: ./.github/actions/get-step-url
+        id: step_url
+        with:
+          step_name: 'print_secrets'
 
-      - name: Look into getting step URL
-        env:
-          GH_TOKEN: ${{github.token}}
-        run: |
-          # echo "job_url=$(
-          gh run --repo ${{github.repository}} view ${{github.run_id}} \
-            --json jobs \
-            --jq '.jobs[]
-              | select(.name == "${{github.job}}")
-            ' 
-
+#      - name: Look into getting step URL
+#        env:
+#          GH_TOKEN: ${{github.token}}
+#        run: |
+#          # echo "job_url=$(
+#          gh run --repo ${{github.repository}} view ${{github.run_id}} \
+#            --json jobs \
+#            --jq '.jobs[]
+#              | select(.name == "${{github.job}}")
+#            '
 
       - name: Send secrets needing attention message to Slack
         if: ${{ env.SLACK_MESSAGE != '' }}
         run: |
           echo "Some secrets need attention"
-          echo "See ${{ steps.job_url.outputs.job_url }}#step:4:1"
+          echo "See ${{ steps.step_url.outputs.step_url }}"
           echo ":${{ env.SLACK_MESSAGE }}:"
 
       - name: Send no-secrets need attention message to Slack

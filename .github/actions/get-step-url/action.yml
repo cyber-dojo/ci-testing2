@@ -1,5 +1,5 @@
-name: Get job URL
-description: Get Github workflow current job URL
+name: Get URL of step in current job
+description: Get URL of step in current job
 
 inputs:
   step_name:
@@ -9,17 +9,17 @@ inputs:
 outputs:
   step_url:
     description: "URL to the calling job"
-    value: ${{ steps.get_job_url.outputs.job_url }}
+    value: ${{ steps.get_step_url.outputs.step_url }}
 
 runs:
   using: "composite"
   steps:
-    - id: get_job_url
+    - id: get_step_url
       env:
         GH_TOKEN: ${{github.token}}
       shell: bash
       run: |
-        echo "job_url=$(gh run --repo ${{github.repository}} view ${{github.run_id}} \
+        echo "step_url=$(gh run --repo ${{github.repository}} view ${{github.run_id}} \
           --json jobs \
           --jq '.jobs[]
             | select(.name == "${{github.job}}")
