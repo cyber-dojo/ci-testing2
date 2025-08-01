@@ -19,6 +19,6 @@ jobs:
           ls -al
 
       - name: third
-        if: ${{ failure() }}
+        if: failure()
         run:
           pwd
