@@ -4,50 +4,12 @@ name: Main
 on:
   push:
 
-env:
-  SLACK_MESSAGE_FILENAME: slack_message.txt
-
 jobs:
   anything:
     needs: []
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Get the Slack message
+      - name: Install ripgrep
         run: |
-          echo "Hello" >> "${SLACK_MESSAGE_FILENAME}"
-          echo "World" >> "${SLACK_MESSAGE_FILENAME}"          
-          {
-            echo "SLACK_MESSAGE<<EOF"
-            cat "${SLACK_MESSAGE_FILENAME}"
-            echo "EOF"
-          } >> ${GITHUB_ENV}          
-
-      - name: print_secrets
-        run: |
-          cat "${SLACK_MESSAGE_FILENAME}"
-
-      - uses: ./.github/actions/get-step-url
-        id: step_url
-        with:
-          step_name: 'print_secrets'
-
-      - name: Send secrets needing attention message to Slack
-        if: ${{ env.SLACK_MESSAGE != '' }}
-        run: |
-          echo "Some secrets need attention"
-          echo "See ${{ steps.step_url.outputs.step_url }}"
-          echo ":${{ env.SLACK_MESSAGE }}:"
-
-      - name: Send no-secrets need attention message to Slack
-        if: ${{ env.SLACK_MESSAGE == '' }}
-        run: |
-          echo "No secrets need attention"
-
-      - name: Send failure message to Slack
-        if: failure()
-        run:
-          echo "Secrets workflow failed"
-          echo "See ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          apt update
+          apt install ripgrep --yes
